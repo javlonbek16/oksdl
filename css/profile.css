@@ -1,0 +1,119 @@
+.data {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.image {
+    width: 330px;
+    height: 300px;
+    border-radius: 50%;
+}
+.username {
+    font-size: 50px;
+}
+.btns {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    margin-top: -160px;
+}
+
+.btns button {
+    width: 13%;
+    color: white;
+    background-color: red;
+    padding: 10px;
+    border: 1px solid rgba(255, 0, 0, 0.685);
+    font-size: 20px;
+    border-radius: 10px;
+    transition: all ease-in-out 0.3s;
+}
+
+.btns button:hover {
+    width: 13%;
+    color: white;
+    background-color: rgba(255, 0, 0, 0.74);
+    padding: 10px;
+    border: 1px solid rgba(255, 0, 0, 0.685);
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+section {
+    padding: 80px 0;
+}
+
+.iframes-wrapper {
+    position: relative;
+    padding: 24px;
+    background-color: var(--iframes-bg-color);
+    top: 0;
+
+}
+.iframes-list {
+    display: flex;
+    flex-wrap: wrap;  
+}
+.iframe {
+    width: 32%;
+    position: relative;
+}
+.iframe:not(:nth-child(3n)) {
+    margin-right: 2%;
+}
+.iframe:not(:nth-child(-n + 3)) {
+    margin-top: 36px;
+}
+.iframe {
+    display: block;
+    position: relative;
+    z-index: 50;
+}
+.iframe > video {
+    width: 100%;
+    height: 300px;
+    display: block;
+}
+.iframe > iframe {
+    display: none;
+    text-decoration: none;
+    color: inherit;
+}
+.iframe-footer {
+    margin-top: 5px;
+    display: flex;
+    position: relative;
+}
+.iframe-footer-text {
+    width: 100%;
+}
+.channel-name {
+    color: var(--spec-text-primary);
+    font-size: 22px;
+    color: rgb(0, 0, 0);
+}
+.iframe-title {
+    font-size: 25px;
+    line-height: 1.25rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.74)
+}
+.uploaded-time {
+    margin-top: -20px;
+    text-align: right; 
+    display: block;
+    width: 100%;
+    color: rgba(0, 0, 0, 0.699);
+    font-weight: bold;
+    font-size: 20px;
+    margin-right: 10px;
+}
+h4 {
+    font-size: 16px;
+}

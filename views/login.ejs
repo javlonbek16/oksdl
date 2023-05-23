@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/login.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="wrapper sign-in">
+            <div id="loginForm" action="#" class="site-form">
+                <h1 class="title">Sign in</h1>
+                <label>
+                    <span class="zmdi zmdi-account"></span>
+                    <input type="text" id="usernameInput" placeholder="Your name">
+                </label>
+                <label>
+                    <span class="zmdi zmdi-lock"></span>
+                    <input type="password" id="passwordInput" placeholder="Password">
+                    <button class="zmdi zmdi-eye" id="showButton" type="button"></button>
+                </label>
+                    <input type="submit" value="Log in" id="submitButton">
+            </div>
+           <div style="margin-top: 20px">
+               <a href="/auth/register" class="sign-link">Create an account</a>
+           </div>
+            <img src="/signin-image.jpg" alt="signin-image" class="signin-image">
+        </div>
+    </div>
+    <script>
+        const submitButton = document.querySelector("#submitButton")
+        const passwordInput = document.querySelector("#passwordInput")
+        const usernameInput = document.querySelector("#usernameInput")    
+
+        async function handleLogin(e) {
+            e.preventDefault()
+            const form = new FormData()
+            form.append("username", usernameInput.value)
+            form.append("password", passwordInput.value)
+            const data = await fetch("/auth/login", {
+                method: "POST",
+                body: form 
+            })
+            if (!data.ok) return alert("Forbidden")
+            window.location.replace("http://localhost:5000/")
+        }
+        submitButton.addEventListener("click", handleLogin)
+    </script>
+</body>
+</html>

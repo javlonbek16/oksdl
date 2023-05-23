@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/profile.css">
+    <title>Youtube</title>
+</head>
+<body style="padding: 180px;">
+    <aside class="data">
+        <img src=<%= "http://localhost:5000/"+ user.image %> class="image" alt="">
+        <h2 class="username"><%= user.username%></h2>
+    </aside>
+    <div class="btns">
+        <button id="subscribe">Subscribe</button>
+    </div>
+    <section>
+         <div class="iframes-wrapper">
+                <ul class="iframes-list">
+                   <%  if(findVideos.length) { %>
+                   <% findVideos.forEach(v=> { %>
+                    <a href=<%= "/video/" + v.id%> class="iframe">
+                    <video src=<%= "http://localhost:5000/" + v.name%> controls=""></video>
+                    <div class="iframe-footer">
+                        <div class="iframe-footer-text">
+                            <h2 class="iframe-title"><%= v.title%></h2>
+                            <h4 style="color: gray; margin-top: -30px; text-align: end;">Views <%= v.views.length%></h4>
+                            <time class="uploaded-time"><%= v.date.split("T")[0] + "/" + v.date.split("T")[1].split(".")[0]%></time>
+                        </div>                  
+                    </div>
+                </a>
+                <%})} else { %>
+                        <h1>No videos</h1>
+               <% } %> 
+               
+              </ul>
+            </div>
+    </section>
+    <script>
+        const subscribeBtn = document.querySelector("#subscribe")
+        async function subscribeChannel(e) {
+            const id = e.target.getAttribute("data-id")
+            const res = await fetch(`http://localhost:5000/subscribe/${id}`, {
+                method: "PUT"
+            })
+            const data = await res.json()
+            if (data.message !== "Success") {
+                alert(data.message)
+                return
+            }
+            window.location.reload()
+        }
+        subscribeBtn.addEventListener("click", subscribeChannel)
+    </script>
+</body>
+</html>

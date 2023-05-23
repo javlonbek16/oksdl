@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <link rel="stylesheet" href="/register.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="wrapper">
+            <h1 class="title">Edit Your Profile</h1>
+            <form id="registerForm" class="site-form">
+                <label>
+                    <span class="zmdi zmdi-account"></span>
+                    <input type="text" id="usernameInput" placeholder="Your name" required>
+                </label>
+                <label>
+                    <span class="zmdi zmdi-lock"></span>
+                    <input type="password" id="passwordInput" placeholder="Password" required>
+                    <button class="zmdi zmdi-eye" type="button" id="showButton"></button>
+                </label>
+                <label class="custom-upload">
+                    <span class="zmdi zmdi-upload"></span>
+                    <span class="file-name">click upload a avatar picture</span>
+                    <input type="file" id="uploadInput" accept="image/*">
+                </label>
+                <input type="submit" value="EDIT" id="submitButton">
+            </form>
+            <img src="/signup-image.jpg" alt="signup-image" class="signup-image">
+        </div>
+    </div>
+    <script> 
+        const submitButton = document.querySelector("#submitButton")
+        const uploadInput = document.querySelector("#uploadInput")
+        const passwordInput = document.querySelector("#passwordInput")
+        const usernameInput = document.querySelector("#usernameInput")    
+
+        async function handleEdit(e) {
+            e.preventDefault()
+            const form = new FormData()
+            form.append("image", uploadInput.files[0])
+            form.append("username", usernameInput.value)
+            form.append("password", passwordInput.value)
+            const res = await fetch("http://localhost:5000/profile/edit", {
+                method: "POST",
+                body: form 
+            })
+            const data = await res.json()
+            console.log(data);
+            if (data.message !== "Success") return alert(data.message)
+            window.location.replace("http://localhost:5000/")
+        }
+        submitButton.addEventListener("click", handleEdit)
+    </script>
+</body>
+
+</html>

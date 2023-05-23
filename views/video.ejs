@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/video.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Video</title>
+</head>
+<body>
+    <section class="video">
+        <video src=<%= "http://localhost:5000/" + findVideo.name %> controls="" width="80%"></video>
+        <h2><%= findVideo.title%></h2>
+        <div class="pop" data-id=<%= findVideo.id%>>
+            <div class="btns">
+                <button class="btn" id="like"><i class="fa-solid fa-thumbs-up"></i> <%= findVideo.likes.length%></button>
+                <button class="btn" id="dizlike"><i class="fa-solid fa-thumbs-down"></i></button>
+            </div>
+            <h4 style="color: gray;">Views <%= findVideo.views.length%></h4>
+        </div>
+        <a href=<%= "http://localhost:5000/profile/" + findUser.id%> class="user-info">
+            <img src=<%= "http://localhost:5000/" + findUser.image %> alt="" class="profile-img">
+            <h2><%= findUser.username%></h2>
+        </a>
+        <div class="sub">
+            <button data-id=<%= findUser.id %> id="subscribe" class="btn-sub">Subscribe</button>
+        </div>
+    </section>
+    <script>
+        const likeBtn = document.querySelector("#like")
+        const dizlikeBtn = document.querySelector("#dizlike")
+        const subscribeBtn = document.querySelector("#subscribe")
+        async function likeVideo(e) {
+            const pop = e.target.parentElement.parentElement
+            const id = pop.getAttribute("data-id")
+            console.log(id);
+            const res = await fetch(`http://localhost:5000/like/${id}`, {
+                method: "PUT"
+            })
+            const data = await res.json()
+            if (data.message === "You already liked this video") {
+                alert(data.message)
+                return
+            }
+            window.location.reload()
+        }
+        async function dizLikeVideo(e) {
+            const pop = e.target.parentElement.parentElement
+            const id = pop.getAttribute("data-id")
+            console.log(id);
+            const res = await fetch(`http://localhost:5000/dizlike/${id}`, {
+                method: "PUT"
+            })
+            const data = await res.json()
+            if (data.message === "You already dizliked this video") {
+                alert(data.message)
+                return
+            }
+            window.location.reload()
+        }
+        async function subscribeChannel(e) {
+            const id = e.target.getAttribute("data-id")
+            const res = await fetch(`http://localhost:5000/subscribe/${id}`, {
+                method: "PUT"
+            })
+            const data = await res.json()
+            if (data.message !== "Success") {
+                alert(data.message)
+                return
+            }
+            window.location.reload()
+        }
+        subscribeBtn.addEventListener("click", subscribeChannel)
+        likeBtn.addEventListener("click", likeVideo)
+        dizlikeBtn.addEventListener("click", dizLikeVideo)
+
+    </script>
+</body>
+</html>
